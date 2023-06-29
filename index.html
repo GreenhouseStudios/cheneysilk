@@ -9,9 +9,30 @@
 </head>
 
 <body>
-    <div class="container" id="iframeContainer">
-        <!-- <iframe src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" height="1000" width="2400" class="responsive-iframe"></iframe> -->
-        <iframe id="fullscreenIframe" class="responsive-iframe" src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" frameborder="0" allowfullscreen allow="geolocation"></iframe>
+    <div>
+        <nav>
+            <button class="nav-button"
+                value="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01">Cheney Silk</button>
+            <button class="nav-button"
+                value="https://storymaps.arcgis.com/collections/9ffd5cb43fb04125ab10a238a2361bb5">Historical
+                Narratives</button>
+            <button class="nav-button"
+                value="https://storymaps.arcgis.com/collections/58b2f050962b4225af36d49a3b63c675">Personal
+                Stories</button>
+            <button class="nav-button"
+                value="https://storymaps.arcgis.com/collections/093cccb1aedf469ea464b281414d361b">The Miracle
+                Workers
+            </button>
+            <button class="nav-button"
+                value="https://storymaps.arcgis.com/collections/32c6c63056f642b3b2ffc6455ed9757c">About
+            </button>
+        </nav>
+        <div class="container" id="iframeContainer">
+            <!-- <iframe src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" height="1000" width="2400" class="responsive-iframe"></iframe> -->
+            <!-- <iframe id="fullscreenIframe" class="responsive-iframe" src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" frameborder="0" allowfullscreen allow="geolocation"></iframe> -->
+            <iframe id="fullscreenIframe" class="responsive-iframe" src="" frameborder="0" allowfullscreen
+                allow="geolocation"></iframe>
+        </div>
     </div>
 </body>
 
@@ -19,20 +40,46 @@
     body {
         padding: 0;
         margin: 0;
+        background:  #FAF2E6;
     }
-    
+
+    nav {
+        background-color: #FAF2E6;
+        text-decoration: none;
+        position: sticky;
+        top: 0;
+        border-bottom: 1px #e6bd80 solid;
+        display: block;
+        width: 100%;
+        z-index: 10;
+        padding: 10px;
+        font-family: "Avenir Next World", sans-serif;
+    }
+
+    nav button {
+        border: none;
+        background: transparent;
+        font-size: 12pt;
+        padding: 10px;
+    }
+
+    nav button:hover {
+        background: #e6bd80;
+    }
+
     .container {
         position: relative;
         overflow: hidden;
         width: 100%;
-        padding-top: 56.25%;
+        padding-top: 58.25%;
         /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
     }
+
     /* Then style the iframe to fit in the container div with full height and width */
-    
+
     .responsive-iframe {
         position: absolute;
-        top: -10;
+        top: 0;
         left: 0;
         bottom: 0;
         right: 0;
@@ -44,9 +91,22 @@
 
 
 <script>
+    const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
+    const navButtons = document.getElementsByClassName('nav-button')
+
+    for (let i = 0; i < navButtons.length; i++) {
+        let b = navButtons[i];
+        b.addEventListener('click', () => {
+            console.log(b.value)
+            fullscreenIframe.src = b.value;
+        })
+    }
+
     // Get references to the necessary elements
     const iframeContainer = document.getElementById('iframeContainer');
     const fullscreenIframe = document.getElementById('fullscreenIframe');
+
+    fullscreenIframe.src = iframeSource;
 
     // Handle the popstate event when the user navigates using the browser history
     window.addEventListener('popstate', () => {
@@ -66,11 +126,11 @@
     // Handle the popstate event within the iframe
     fullscreenIframe.addEventListener('load', () => {
         const iframeHistory = fullscreenIframe.contentWindow.history;
-        iframeHistory.pushState = iframeHistory.pushState || function() {};
-        iframeHistory.replaceState = iframeHistory.replaceState || function() {};
+        iframeHistory.pushState = iframeHistory.pushState || function () { };
+        iframeHistory.replaceState = iframeHistory.replaceState || function () { };
 
         // Hijack iframe's history.pushState method
-        fullscreenIframe.contentWindow.history.pushState = function(state, title, url) {
+        fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
             // Update the iframe's history
             iframeHistory.pushState.call(iframeHistory, state, title, url);
 
@@ -79,7 +139,7 @@
         };
 
         // Hijack iframe's history.replaceState method
-        fullscreenIframe.contentWindow.history.replaceState = function(state, title, url) {
+        fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
             // Update the iframe's history
             iframeHistory.replaceState.call(iframeHistory, state, title, url);
 
