@@ -34,10 +34,7 @@
             </nav>
         </span>
         <div class="container" id="iframeContainer">
-            <!-- <iframe src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" height="1000" width="2400" class="responsive-iframe"></iframe> -->
-            <!-- <iframe id="fullscreenIframe" class="responsive-iframe" src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" frameborder="0" allowfullscreen allow="geolocation"></iframe> -->
-            <iframe id="fullscreenIframe" class="responsive-iframe" src="" frameborder="0" allowfullscreen
-                allow="geolocation"></iframe>
+          <h1>Oops</h1>
         </div>
     </div>
     <script src="index.js"></script>
@@ -128,86 +125,5 @@
         border: none;
     }
 </style>
-
-
-<script>
-
-
-
-    const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
-    const navButtons = document.getElementsByClassName('nav-button')
-
-    for (let i = 0; i < navButtons.length; i++) {
-        let b = navButtons[i];
-
-        b.addEventListener('click', () => {
-            // console.log(b.value)
-            fullscreenIframe.src = b.value;
-        })
-    }
-
-    // Get references to the necessary elements
-    const iframeContainer = document.getElementById('iframeContainer');
-    const fullscreenIframe = document.getElementById('fullscreenIframe');
-
-    fullscreenIframe.src = iframeSource;
-
-    // Handle the popstate event when the user navigates using the browser history
-    window.addEventListener('popstate', () => {
-        // Check if the iframe is currently open
-        if (iframeContainer.classList.contains('active')) {
-            // Hide the iframe container
-            iframeContainer.classList.remove('active');
-
-            // Clear the iframe source to stop loading the content
-            fullscreenIframe.src = '';
-
-            // Update the browser history
-            history.pushState(null, null, '');
-        }
-    });
-
-    // Handle the popstate event within the iframe
-    fullscreenIframe.addEventListener('load', () => {
-        const iframeHistory = fullscreenIframe.contentWindow.history;
-        iframeHistory.pushState = iframeHistory.pushState || function () { };
-        iframeHistory.replaceState = iframeHistory.replaceState || function () { };
-
-        // Hijack iframe's history.pushState method
-        fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
-            // Update the iframe's history
-            iframeHistory.pushState.call(iframeHistory, state, title, url);
-
-            // Update the browser's history to reflect the iframe's URL
-            history.pushState(state, title, url);
-        };
-
-        // Hijack iframe's history.replaceState method
-        fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
-            // Update the iframe's history
-            iframeHistory.replaceState.call(iframeHistory, state, title, url);
-
-            // Update the browser's history to reflect the iframe's URL
-            history.replaceState(state, title, url);
-        };
-
-        // Handle the popstate event within the iframe
-        fullscreenIframe.contentWindow.addEventListener('popstate', () => {
-            // Update the browser's history to reflect the iframe's URL
-            history.go();
-        });
-    });
-
-
-
-    // Show the iframe container by default
-    iframeContainer.classList.add('active');
-
-    // Load the desired URL in the iframe
-    // fullscreenIframe.src = 'https://example.com';
-
-    // Update the browser history
-    history.pushState(null, null, '?iframe=open');
-</script>
 
 </html>
