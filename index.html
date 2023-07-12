@@ -46,8 +46,8 @@
                 <label><input class="nav-button" type="radio" id="about" name="nav"
                         value="https://storymaps.arcgis.com/collections/32c6c63056f642b3b2ffc6455ed9757c">
                     About</label>
-                    <a href="/asdf">ASDF</a>
-                    <a href="/about" target="_blank">About</a>
+                <a href="/asdf">ASDF</a>
+                <a href="/about" target="_blank">About</a>
             </nav>
         </span>
         <div class="container" id="iframeContainer">
@@ -55,7 +55,7 @@
                 allow="geolocation"></iframe>
         </div>
     </div>
-    <script src="index.js"></script>
+    <!-- <script src="index.js"></script> -->
 </body>
 
 <style>
@@ -144,33 +144,16 @@
     }
 </style>
 
- <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    
+<script type="text/javascript">
+      if (window.location.hash.length > 1) {
+      const path = window.location.hash.replace('#', '')
+      history.pushState({ page: 1 }, "Cheney Silk", '/cheneysilk' + path)
+      fullscreenIframe.src = "https://storymaps.arcgis.com/stories/" + path;
+    //   document.getElementById('header').innerHTML = document.getElementById('header').innerHTML.replace('{PATH}', path)
+    }
+</script>
+
 <script>
-
-
-
     // const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
     const navButtons = document.getElementsByClassName('nav-button')
 

@@ -41,29 +41,23 @@ const route = (event) => {
 };
 
 const locationHandler = async () => {
-    console.log(window.location.pathname)
-    let location =  window.location.pathname.replace("/cheneysilk",""); // get the url path
-    console.log(location)
-    // if the path length is 0, set it to primary page route
-    if (location.length == 0) {
-        location = "/";
+    // console.log(window.location.pathname)
+    // let location =  window.location.pathname.replace("/cheneysilk",""); // get the url path
+    // console.log(location)
+    // // if the path length is 0, set it to primary page route
+    // if (location.length == 0) {
+    //     location = "/";
     }
     // get the route object from the urlRoutes object
     // let route = routes[location] || routes["404"];
     // let route = routes[location]
     
-    console.log(route)
+    // console.log(route)
 
-    // let template = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01"  
+    // let template = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" ;
+    // const fullscreenIframe = document.getElementById('fullscreenIframe');
+    // fullscreenIframe.src = template;
 
-    // get the html from the template
-    // const html = await fetch(template).then((response) => response.text());
-    // console.log(html)
-    // set the content of the content div to the html
-    // document.getElementById("iframeContainer").innerHTML = html;
-    // set the title of the document to the title of the route
-    const fullscreenIframe = document.getElementById('fullscreenIframe');
-    fullscreenIframe.src = "https://bing.com"   ;
     // document.title = route.title;
     // set the description of the document to the description of the route
     // document
