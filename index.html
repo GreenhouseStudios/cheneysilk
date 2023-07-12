@@ -46,8 +46,8 @@
                 <label><input class="nav-button" type="radio" id="about" name="nav"
                         value="https://storymaps.arcgis.com/collections/32c6c63056f642b3b2ffc6455ed9757c">
                     About</label>
-                    <a href="http://127.0.0.1:5500/asdf">ASDF</a>
-                    <a href="http://127.0.0.1:5500/about" target="_blank">About</a>
+                    <a href="/asdf">ASDF</a>
+                    <a href="/about" target="_blank">About</a>
             </nav>
         </span>
         <div class="container" id="iframeContainer">
@@ -146,12 +146,34 @@
     }
 </style>
 
-
+ <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    
 <script>
 
 
 
-    const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
+    // const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
     const navButtons = document.getElementsByClassName('nav-button')
 
     for (let i = 0; i < navButtons.length; i++) {
@@ -167,64 +189,64 @@
     const iframeContainer = document.getElementById('iframeContainer');
     const fullscreenIframe = document.getElementById('fullscreenIframe');
 
-    fullscreenIframe.src = iframeSource;
+    // fullscreenIframe.src = iframeSource;
 
-    // Handle the popstate event when the user navigates using the browser history
-    window.addEventListener('popstate', () => {
-        // Check if the iframe is currently open
-        if (iframeContainer.classList.contains('active')) {
-            // Hide the iframe container
-            iframeContainer.classList.remove('active');
+    // // Handle the popstate event when the user navigates using the browser history
+    // window.addEventListener('popstate', () => {
+    //     // Check if the iframe is currently open
+    //     if (iframeContainer.classList.contains('active')) {
+    //         // Hide the iframe container
+    //         iframeContainer.classList.remove('active');
 
-            // Clear the iframe source to stop loading the content
-            fullscreenIframe.src = '';
+    //         // Clear the iframe source to stop loading the content
+    //         fullscreenIframe.src = '';
 
-            // Update the browser history
-            history.pushState(null, null, '');
-        }
-    });
+    //         // Update the browser history
+    //         history.pushState(null, null, '');
+    //     }
+    // });
 
-    // Handle the popstate event within the iframe
-    fullscreenIframe.addEventListener('load', () => {
-        const iframeHistory = fullscreenIframe.contentWindow.history;
-        iframeHistory.pushState = iframeHistory.pushState || function () { };
-        iframeHistory.replaceState = iframeHistory.replaceState || function () { };
+    // // Handle the popstate event within the iframe
+    // fullscreenIframe.addEventListener('load', () => {
+    //     const iframeHistory = fullscreenIframe.contentWindow.history;
+    //     iframeHistory.pushState = iframeHistory.pushState || function () { };
+    //     iframeHistory.replaceState = iframeHistory.replaceState || function () { };
 
-        // Hijack iframe's history.pushState method
-        fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
-            // Update the iframe's history
-            iframeHistory.pushState.call(iframeHistory, state, title, url);
+    //     // Hijack iframe's history.pushState method
+    //     fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
+    //         // Update the iframe's history
+    //         iframeHistory.pushState.call(iframeHistory, state, title, url);
 
-            // Update the browser's history to reflect the iframe's URL
-            history.pushState(state, title, url);
-        };
+    //         // Update the browser's history to reflect the iframe's URL
+    //         history.pushState(state, title, url);
+    //     };
 
-        // Hijack iframe's history.replaceState method
-        fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
-            // Update the iframe's history
-            iframeHistory.replaceState.call(iframeHistory, state, title, url);
+    //     // Hijack iframe's history.replaceState method
+    //     fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
+    //         // Update the iframe's history
+    //         iframeHistory.replaceState.call(iframeHistory, state, title, url);
 
-            // Update the browser's history to reflect the iframe's URL
-            history.replaceState(state, title, url);
-        };
+    //         // Update the browser's history to reflect the iframe's URL
+    //         history.replaceState(state, title, url);
+    //     };
 
-        // Handle the popstate event within the iframe
-        fullscreenIframe.contentWindow.addEventListener('popstate', () => {
-            // Update the browser's history to reflect the iframe's URL
-            history.go();
-        });
-    });
+    //     // Handle the popstate event within the iframe
+    //     fullscreenIframe.contentWindow.addEventListener('popstate', () => {
+    //         // Update the browser's history to reflect the iframe's URL
+    //         history.go();
+    //     });
+    // });
 
 
 
-    // Show the iframe container by default
-    iframeContainer.classList.add('active');
+    // // Show the iframe container by default
+    // iframeContainer.classList.add('active');
 
-    // Load the desired URL in the iframe
-    // fullscreenIframe.src = 'https://example.com';
+    // // Load the desired URL in the iframe
+    // // fullscreenIframe.src = 'https://example.com';
 
-    // Update the browser history
-    history.pushState(null, null, '?iframe=open');
+    // // Update the browser history
+    // history.pushState(null, null, '?iframe=open');
 </script>
 
 </html>

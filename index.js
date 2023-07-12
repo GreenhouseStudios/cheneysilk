@@ -1,16 +1,15 @@
 const routes = {
-    404: {
-        template: "/index.html",
-        title: "404",
-        description: "Page not found",
-    },
+    // 404: {
+    //     template: "/404.html",
+    //     title: "404",
+    //     description: "Page not found",
+    // },
     "/": {
         template: "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01",
         title: "Home",
         description: "This is the home page",
     },
     storymap: {
-        template: "https://greenhousestudios.github.io/cheneysilk/index.html",
         title: "Storymap Story",
         description: "Storymap Story"
     },
@@ -60,19 +59,28 @@ const locationHandler = async () => {
         location = "/";
     }
     // get the route object from the urlRoutes object
-    let route = routes[location] || routes["404"];
-
+    // let route = routes[location] || routes["404"];
+    let route = routes[location]
     
-    if(location.includes("660a1cbd115d4681956ddc36924d8b34")){
-        route = routes["storymap"]
-    }
+    // if(location.includes("660a1cbd115d4681956ddc36924d8b34")){
+    //     route = routes["storymap"]
+    // }
     console.log(route)
 
+    let template = route.template;
+    if(!route)
+        template = "https://google.com"
+    // if(route.title === "Storymap Story")
+    //     template = "https://google.com"
+
     // get the html from the template
-    const html = await fetch(route.template).then((response) => response.text());
+    // const html = await fetch(template).then((response) => response.text());
+    // console.log(html)
     // set the content of the content div to the html
-    document.getElementById("iframeContainer").innerHTML = html;
+    // document.getElementById("iframeContainer").innerHTML = html;
     // set the title of the document to the title of the route
+    const fullscreenIframe = document.getElementById('fullscreenIframe');
+    fullscreenIframe.src = template;
     document.title = route.title;
     // set the description of the document to the description of the route
     // document
