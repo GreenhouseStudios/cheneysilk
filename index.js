@@ -1,6 +1,6 @@
 const routes = {
     404: {
-        template: "/404.html",
+        template: "/index.html",
         title: "404",
         description: "Page not found",
     },
@@ -9,11 +9,11 @@ const routes = {
         title: "Home",
         description: "This is the home page",
     },
-    // storymap: {
-    //     template: "https://storymaps.arcgis.com/collections/58b2f050962b4225af36d49a3b63c675",
-    //     title: "Storymap Story",
-    //     description: "Storymap Story"
-    // },
+    storymap: {
+        template: "https://greenhousestudios.github.io/cheneysilk/index.html",
+        title: "Storymap Story",
+        description: "Storymap Story"
+    },
     // "/stories/": {
     //     template: "/404.html",
     //     title: "Storymap Story",
@@ -52,19 +52,21 @@ const route = (event) => {
 };
 
 const locationHandler = async () => {
-    const location = window.location.pathname; // get the url path
+    console.log(window.location.pathname)
+    let location =  window.location.pathname.substring(12); // get the url path
     console.log(location)
     // if the path length is 0, set it to primary page route
     if (location.length == 0) {
         location = "/";
     }
     // get the route object from the urlRoutes object
-    const route = routes[location] || routes["404"];
+    let route = routes[location] || routes["404"];
 
+    
+    if(location.includes("660a1cbd115d4681956ddc36924d8b34")){
+        route = routes["storymap"]
+    }
     console.log(route)
-    // if(location.startsWith("/stories/")){
-    //     route = routes["storymap"]
-    // }
 
     // get the html from the template
     const html = await fetch(route.template).then((response) => response.text());

@@ -1,12 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Not Found</title>
+    <title>Document</title>
 </head>
+
 <body>
-    <h1>404! Hey, sorry about that!</h1>
+    <div>
+        <span class="nav-container">
+            <img src="https://cdn.arcgis.com/sharing/rest/content/items/f24abc259c2f49fb92df710462b8e3df/resources/3Z8imsr9deRGjcKgrjTRg.png?w=400"
+                alt="">
+            <nav>
+                <label><input class="nav-button" type="radio" id="cheneysilk" name="nav" checked
+                        value="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01">
+                    Cheney Silk</label>
+                <label><input class="nav-button" type="radio" id="historicalnarratives" name="nav"
+                        value="https://storymaps.arcgis.com/collections/9ffd5cb43fb04125ab10a238a2361bb5">
+                    Historical Narratives</label>
+                <label><input class="nav-button" type="radio" id="personalstories" name="nav"
+                        value="https://storymaps.arcgis.com/collections/58b2f050962b4225af36d49a3b63c675">
+                    Personal Stories</label>
+                <label><input class="nav-button" type="radio" id="miracleworkers" name="nav"
+                        value="https://storymaps.arcgis.com/collections/093cccb1aedf469ea464b281414d361b">
+                    The Miracle Workers</label>
+                <label><input class="nav-button" type="radio" id="about" name="nav"
+                        value="https://storymaps.arcgis.com/collections/32c6c63056f642b3b2ffc6455ed9757c">
+                    About</label>
+                    <a href="/asdf">ASDF</a>
+                    <a href="/about" target="_blank">About</a>
+            </nav>
+        </span>
+        <div class="container" id="iframeContainer">
+            <!-- <iframe src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" height="1000" width="2400" class="responsive-iframe"></iframe> -->
+            <!-- <iframe id="fullscreenIframe" class="responsive-iframe" src="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01" frameborder="0" allowfullscreen allow="geolocation"></iframe> -->
+            <iframe id="fullscreenIframe" class="responsive-iframe" src="" frameborder="0" allowfullscreen
+                allow="geolocation"></iframe>
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
+
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        background: #FAF2E6;
+    }
+
+    nav {
+        background-color: #FAF2E6;
+        text-decoration: none;
+        position: sticky;
+        top: 0;
+        border-bottom: 1px #e6bd80 solid;
+        display: block;
+        width: 100%;
+        z-index: 10;
+        padding: 20px;
+        font-family: "Avenir Next World", sans-serif;
+    }
+
+    .nav-container img {
+        height: 20px;
+        padding: 10px;
+    }
+
+    .nav-container {
+        display: flex;
+        align-items: center;
+    }
+
+    nav button {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        color: #304e4e;
+        padding: 10px;
+        font-family: "Avenir Next World", sans-serif;
+        border-radius: 0.2rem;
+    }
+
+    nav label {
+        appearance: none;
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        color: #304e4e;
+        padding: 10px 20px 10px 10px;
+        font-family: "Avenir Next World", sans-serif;
+        border-radius: 0.2rem;
+    }
+
+    nav input {
+        appearance: none;
+    }
+
+    nav label:has(input[type="radio"]:checked) {
+        background-color: #304e4e;
+        color: #faf2e6;
+    }
+
+    nav label:hover {
+        background: #e6bd80;
+    }
+
+    .container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 58.25%;
+        /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    }
+
+    /* Then style the iframe to fit in the container div with full height and width */
+
+    .responsive-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+
+
+<script>
+
+
+
+    const iframeSource = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01";
+    const navButtons = document.getElementsByClassName('nav-button')
+
+    for (let i = 0; i < navButtons.length; i++) {
+        let b = navButtons[i];
+
+        b.addEventListener('click', () => {
+            // console.log(b.value)
+            fullscreenIframe.src = b.value;
+        })
+    }
+
+    // Get references to the necessary elements
+    const iframeContainer = document.getElementById('iframeContainer');
+    const fullscreenIframe = document.getElementById('fullscreenIframe');
+
+    fullscreenIframe.src = iframeSource;
+
+    // Handle the popstate event when the user navigates using the browser history
+    window.addEventListener('popstate', () => {
+        // Check if the iframe is currently open
+        if (iframeContainer.classList.contains('active')) {
+            // Hide the iframe container
+            iframeContainer.classList.remove('active');
+
+            // Clear the iframe source to stop loading the content
+            fullscreenIframe.src = '';
+
+            // Update the browser history
+            history.pushState(null, null, '');
+        }
+    });
+
+    // Handle the popstate event within the iframe
+    fullscreenIframe.addEventListener('load', () => {
+        const iframeHistory = fullscreenIframe.contentWindow.history;
+        iframeHistory.pushState = iframeHistory.pushState || function () { };
+        iframeHistory.replaceState = iframeHistory.replaceState || function () { };
+
+        // Hijack iframe's history.pushState method
+        fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
+            // Update the iframe's history
+            iframeHistory.pushState.call(iframeHistory, state, title, url);
+
+            // Update the browser's history to reflect the iframe's URL
+            history.pushState(state, title, url);
+        };
+
+        // Hijack iframe's history.replaceState method
+        fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
+            // Update the iframe's history
+            iframeHistory.replaceState.call(iframeHistory, state, title, url);
+
+            // Update the browser's history to reflect the iframe's URL
+            history.replaceState(state, title, url);
+        };
+
+        // Handle the popstate event within the iframe
+        fullscreenIframe.contentWindow.addEventListener('popstate', () => {
+            // Update the browser's history to reflect the iframe's URL
+            history.go();
+        });
+    });
+
+
+
+    // Show the iframe container by default
+    iframeContainer.classList.add('active');
+
+    // Load the desired URL in the iframe
+    // fullscreenIframe.src = 'https://example.com';
+
+    // Update the browser history
+    history.pushState(null, null, '?iframe=open');
+</script>
+
 </html>
