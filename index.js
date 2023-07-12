@@ -1,23 +1,13 @@
 const routes = {
-    // 404: {
-    //     template: "/404.html",
-    //     title: "404",
-    //     description: "Page not found",
-    // },
     "/": {
-        template: "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01",
         title: "Home",
         description: "This is the home page",
     },
     storymap: {
+        template: "https://storymaps.arcgis.com/stories/660a1cbd115d4681956ddc36924d8b34",
         title: "Storymap Story",
         description: "Storymap Story"
     },
-    // "/stories/": {
-    //     template: "/404.html",
-    //     title: "Storymap Story",
-    //     description: "Storymap Story"
-    // },
     "/about": {
         template: "/about.html",
         title: "About Us",
@@ -46,13 +36,13 @@ const route = (event) => {
     event = event || window.event; // get window.event if event argument not provided
     event.preventDefault();
     // window.history.pushState(state, unused, target link);
-    window.history.pushState({}, "", event.target.href);
+    // window.history.pushState({}, "", event.target.href);
     locationHandler();
 };
 
 const locationHandler = async () => {
     console.log(window.location.pathname)
-    let location =  window.location.pathname.substring(12); // get the url path
+    let location =  window.location.pathname.replace("/cheneysilk",""); // get the url path
     console.log(location)
     // if the path length is 0, set it to primary page route
     if (location.length == 0) {
@@ -60,18 +50,11 @@ const locationHandler = async () => {
     }
     // get the route object from the urlRoutes object
     // let route = routes[location] || routes["404"];
-    let route = routes[location]
+    // let route = routes[location]
     
-    // if(location.includes("660a1cbd115d4681956ddc36924d8b34")){
-    //     route = routes["storymap"]
-    // }
     console.log(route)
 
-    let template = route.template;
-    if(!route)
-        template = "https://google.com"
-    // if(route.title === "Storymap Story")
-    //     template = "https://google.com"
+    // let template = "https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01"  
 
     // get the html from the template
     // const html = await fetch(template).then((response) => response.text());
@@ -80,8 +63,8 @@ const locationHandler = async () => {
     // document.getElementById("iframeContainer").innerHTML = html;
     // set the title of the document to the title of the route
     const fullscreenIframe = document.getElementById('fullscreenIframe');
-    fullscreenIframe.src = template;
-    document.title = route.title;
+    fullscreenIframe.src = "https://bing.com"   ;
+    // document.title = route.title;
     // set the description of the document to the description of the route
     // document
     //     .querySelector('meta[name="description"]')
