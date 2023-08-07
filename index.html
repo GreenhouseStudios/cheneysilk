@@ -31,9 +31,9 @@
                 value="https://storymaps.arcgis.com/collections/32c6c63056f642b3b2ffc6455ed9757c">About
             </button> -->
 
-                <label><input class="nav-button" type="radio" id="cheneysilk" name="nav" checked
+                <!-- <label><input class="nav-button" type="radio" id="cheneysilk" name="nav" checked
                         value="https://storymaps.arcgis.com/collections/bf84e6ebd1c2456a9cdc721779043c01">
-                    Cheney Silk</label>
+                    Cheney Silk</label> -->
                 <label><input class="nav-button" type="radio" id="historicalnarratives" name="nav"
                         value="https://storymaps.arcgis.com/collections/9ffd5cb43fb04125ab10a238a2361bb5">
                     Historical Narratives</label>
@@ -53,6 +53,12 @@
                 allow="geolocation"></iframe>
         </div>
     </div>
+    <footer>
+        © 2023 
+        <a href="https://www.greenhousestudios.uconn.edu">
+        <img src="./images/Greenhouse Studios Logos_LONG-WORDMARK_BLACK (1).png" alt="">
+    </a>
+    </footer>
     <!-- <script src="index.js"></script> -->
 </body>
 
@@ -61,6 +67,7 @@
         padding: 0;
         margin: 0;
         background: #FAF2E6;
+        font-family: "Avenir Next World", sans-serif;
     }
 
     nav {
@@ -69,11 +76,11 @@
         position: sticky;
         top: 0;
         border-bottom: 1px #e6bd80 solid;
-        display: block;
+        display: flex;
         width: 100%;
         z-index: 10;
         padding: 20px;
-        font-family: "Avenir Next World", sans-serif;
+        
     }
 
     .nav-container img {
@@ -103,6 +110,7 @@
         font-size: 14px;
         color: #304e4e;
         padding: 10px 20px 10px 10px;
+        margin: 0 5px;
         font-family: "Avenir Next World", sans-serif;
         border-radius: 0.2rem;
     }
@@ -140,12 +148,24 @@
         height: 100%;
         border: none;
     }
+
+    footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 10px;
+    }
+
+    footer img{
+        width: 200px;
+        margin: 5px 0 0 0;
+    }
 </style>
 
 <script type="text/javascript">
     if (window.location.hash.length > 1) {
         const path = window.location.hash.replace('#', '')
-        history.pushState({ page: 1 }, "Cheney Silk", '/cheneysilk' + path)
+        history.pushState({ page: 1 }, "Cheney Silk", path)
         fullscreenIframe.src = "https://storymaps.arcgis.com/stories/" + path;
         //   document.getElementById('header').innerHTML = document.getElementById('header').innerHTML.replace('{PATH}', path)
     }
@@ -173,51 +193,51 @@
 
     // fullscreenIframe.src = iframeSource;
 
-    // // Handle the popstate event when the user navigates using the browser history
-    // window.addEventListener('popstate', () => {
-    //     // Check if the iframe is currently open
-    //     if (iframeContainer.classList.contains('active')) {
-    //         // Hide the iframe container
-    //         iframeContainer.classList.remove('active');
+    // Handle the popstate event when the user navigates using the browser history
+    window.addEventListener('popstate', () => {
+        // Check if the iframe is currently open
+        if (iframeContainer.classList.contains('active')) {
+            // Hide the iframe container
+            iframeContainer.classList.remove('active');
 
-    //         // Clear the iframe source to stop loading the content
-    //         fullscreenIframe.src = '';
+            // Clear the iframe source to stop loading the content
+            fullscreenIframe.src = '';
 
-    //         // Update the browser history
-    //         history.pushState(null, null, '');
-    //     }
-    // });
+            // Update the browser history
+            history.pushState(null, null, '');
+        }
+    });
 
-    // // Handle the popstate event within the iframe
-    // fullscreenIframe.addEventListener('load', () => {
-    //     const iframeHistory = fullscreenIframe.contentWindow.history;
-    //     iframeHistory.pushState = iframeHistory.pushState || function () { };
-    //     iframeHistory.replaceState = iframeHistory.replaceState || function () { };
+    // Handle the popstate event within the iframe
+    fullscreenIframe.addEventListener('load', () => {
+        const iframeHistory = fullscreenIframe.contentWindow.history;
+        iframeHistory.pushState = iframeHistory.pushState || function () { };
+        iframeHistory.replaceState = iframeHistory.replaceState || function () { };
 
-    //     // Hijack iframe's history.pushState method
-    //     fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
-    //         // Update the iframe's history
-    //         iframeHistory.pushState.call(iframeHistory, state, title, url);
+        // Hijack iframe's history.pushState method
+        fullscreenIframe.contentWindow.history.pushState = function (state, title, url) {
+            // Update the iframe's history
+            iframeHistory.pushState.call(iframeHistory, state, title, url);
 
-    //         // Update the browser's history to reflect the iframe's URL
-    //         history.pushState(state, title, url);
-    //     };
+            // Update the browser's history to reflect the iframe's URL
+            history.pushState(state, title, url);
+        };
 
-    //     // Hijack iframe's history.replaceState method
-    //     fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
-    //         // Update the iframe's history
-    //         iframeHistory.replaceState.call(iframeHistory, state, title, url);
+        // Hijack iframe's history.replaceState method
+        fullscreenIframe.contentWindow.history.replaceState = function (state, title, url) {
+            // Update the iframe's history
+            iframeHistory.replaceState.call(iframeHistory, state, title, url);
 
-    //         // Update the browser's history to reflect the iframe's URL
-    //         history.replaceState(state, title, url);
-    //     };
+            // Update the browser's history to reflect the iframe's URL
+            history.replaceState(state, title, url);
+        };
 
-    //     // Handle the popstate event within the iframe
-    //     fullscreenIframe.contentWindow.addEventListener('popstate', () => {
-    //         // Update the browser's history to reflect the iframe's URL
-    //         history.go();
-    //     });
-    // });
+        // Handle the popstate event within the iframe
+        fullscreenIframe.contentWindow.addEventListener('popstate', () => {
+            // Update the browser's history to reflect the iframe's URL
+            history.go();
+        });
+    });
 
 
 
