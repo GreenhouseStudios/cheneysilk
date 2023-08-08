@@ -7,12 +7,12 @@ import time
 from arcgis.gis import GIS
 from arcgis.apps.storymap import Text, Image, StoryMap
 
-logger = logging.getLogger('cheneysilk')
-logger.setLevel(logging.DEBUG)
-# create file handler which logs even debug messages
-fh = logging.FileHandler('C:/Users/Tom/Documents/ArcGIS/Projects/cheneysilk/spam.log')
-fh.setLevel(logging.DEBUG)
-logger.addHandler(fh)
+# logger = logging.getLogger('cheneysilk')
+# logger.setLevel(logging.DEBUG)
+# # create file handler which logs even debug messages
+# fh = logging.FileHandler('C:/Users/Tom/Documents/ArcGIS/Projects/cheneysilk/spam.log')
+# fh.setLevel(logging.DEBUG)
+# logger.addHandler(fh)
 
 def is_valid_code(code):
     pattern = r'^[a-zA-Z0-9]{32}$'
@@ -224,7 +224,7 @@ def scanStory(story):
     sidecarChanges = 0
     title = gis.content.get(story)
     s = st.get_data()
-    print(title) 
+#     print(title) 
 #         pprint.pprint(s)
     storymap = StoryMap(story)
 #         print(storymap) #prints URL of the storymap
@@ -287,19 +287,23 @@ async def main():
     unmatched = set()
     for id in oldIds:
         s = gis.content.get(id)
+#         print(s.title)
         for j in my_content: #scan list of my stories
             if s.title == j.title:
                 idMapping.append([id,j.id])
                 matchedIds.append(id)
                 break
-        unmatched.add(id)
+        if id not in matchedIds:
+            unmatched.add(id)
     
 # #     print(idMapping)
 
+    print("Stories that need to be copied")
     for id in list(unmatched):
 #         print(id)
         s= StoryMap(id)
         print(s.cover()['data']['title'])
+#         duplicateStory(id)
 
 # This block copies all the stories nested in the embed structure
 #     contentManager = arcgis.gis.ContentManager(gis)    
@@ -333,7 +337,7 @@ async def main():
     newStories.sort()
     
 #     n = 19
-#     n = 1
+#     n = 3
     mode = "test"
     print("Script running in " + mode + " mode...")
     
@@ -344,8 +348,11 @@ async def main():
 #         print("\n")
         
 #     for story in newStories[n:n+1]:
+    storyCount = 0
     for story in newStories:
+        print("-###- Story #" + str(storyCount+1))
         scanStory(story)
+        storyCount += 1
     
     storiesWithChanges = set()
     for change in change_list:
@@ -353,7 +360,7 @@ async def main():
     
     print("[--- Stories with Changes ---]")
     for s in list(storiesWithChanges):
-        print(s)
+        print(s.cover()['data']['title'])
     
     print("Total changes: " + str(changeCount))
     
@@ -361,7 +368,7 @@ async def main():
     for count,change in enumerate(change_list):
         print("Change #"  + str(count+1))
         change.report()
-#         change.execute() 
+        change.execute() 
         
     if mode == "prod":
         for story in list(storiesWithChanges):    
@@ -390,4 +397,8 @@ asyncio.run(main())
 # duplicateStory("289d4710db3748e5b09bc22f8d8eaebd") #Lifestyle Inequality
 # duplicateStory("d1491a66572948e1b2832894b8641238") #Robert McDowell
 # duplicateStory("fea9dff24bd14cbc96526902b9cb9a6d") #FavorableWorkingConditions
+
+# duplicateStory("660a1cbd115d4681956ddc36924d8b34") #FWCheneyAndTheNextGeneration
+
+#https://storymaps.arcgis.com/stories/c4ce7ea378af4a54aca877817f86c2f2#ref-n-eHgado
         
